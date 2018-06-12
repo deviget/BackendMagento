@@ -1,0 +1,39 @@
+{
+  "name": "deviget/backendmagento",
+  "description": "Extension for Magento 2 which will allow users to be directed to a URL on Magento and have a specific product added to their cart.",
+  "require": {
+    "php": "~7.0.0|~7.1.0",
+    "magento/framework": "~100.0",
+    "magento/module-catalog": "~100.0"
+  },
+  "suggest": {
+
+  },
+  "type": "magento2-module",
+  "version": "0.1.0",
+  "license": [
+
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "SemExpert\\AjaxAddToCart\\": ""
+    }
+  },
+  "authors": [
+    {
+      "name": "Guillermo Siperman",
+      "role": "Developer"
+    }
+  ],
+  "extra": {
+    "map": [
+      [
+        "*",
+        "SemExpert/AjaxAddToCart"
+      ]
+    ]
+  }
+}

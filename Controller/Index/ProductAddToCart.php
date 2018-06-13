@@ -5,6 +5,8 @@ namespace Deviget\BackendMagento\Controller\Index;
 class ProductAddToCart
     extends \Magento\Framework\App\Action\Action
 {
+    const PRODUCT_SEPARATOR = ',';
+
     protected $_cart;
     protected $_productFactory;
     protected $_messageManager;
@@ -34,20 +36,27 @@ class ProductAddToCart
         $product_id = $this->getRequest()->getParam('id');
 
         if (isset($product_id) && $product_id) {
-
-            /** @var \Magento\Catalog\Model\Product $product */
-            $product = $this->_productFactory->create()->load($product_id);
-            if (is_object($product) && $product->getId()) {
-
-                try {
-                    $this->_cart->addProduct($product, array('qty' => 1));
-                    $this->_cart->save();
-                } catch (\InvalidArgumentException $e) {
-                    $this->_messageManager->addSuccess(__("Error adding to your cart."));
-                }
-                $this->_messageManager->addSuccess(__("Product added to your cart."));
+            if (strstr($product_id, self::PRODUCT_SEPARATOR)) {
+                $products = explode(self::PRODUCT_SEPARATOR, $product_id);
             } else {
-                $this->_messageManager->addError(__("Product does not exist."));
+                $products = array($product_id);
+            }
+
+            foreach ($products as $product_id) {
+                /** @var \Magento\Catalog\Model\Product $product */
+                $product = $this->_productFactory->create()->load($product_id);
+                if (is_object($product) && $product->getId()) {
+
+                    try {
+                        $this->_cart->addProduct($product, array('qty' => 1));
+                        $this->_cart->save();
+                    } catch (\InvalidArgumentException $e) {
+                        $this->_messageManager->addSuccess(__("Error adding to your cart."));
+                    }
+                    $this->_messageManager->addSuccess(__("Product added to your cart."));
+                } else {
+                    $this->_messageManager->addError(__("Product does not exist."));
+                }
             }
         } else {
             $this->_messageManager->addError(__("Invalid link."));

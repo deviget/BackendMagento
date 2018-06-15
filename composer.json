@@ -19,7 +19,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "SemExpert\\AjaxAddToCart\\": ""
+      "Deviget\\BackendMagento\\": ""
     }
   },
   "authors": [
@@ -27,13 +27,5 @@
       "name": "Guillermo Siperman",
       "role": "Developer"
     }
-  ],
-  "extra": {
-    "map": [
-      [
-        "*",
-        "SemExpert/AjaxAddToCart"
-      ]
-    ]
-  }
+  ]
 }
